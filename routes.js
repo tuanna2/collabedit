@@ -9,6 +9,7 @@ routes.use(bodyParser.urlencoded({ extended: true }));
 routes.get('/',controllerHome);
 
 routes.get('/login',controllerUser.login_get);
+
 routes.post('/login',controllerUser.login_post);
 
 routes.get('/signup',controllerUser.signup_get);
