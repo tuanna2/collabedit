@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <link rel="stylesheet" href="http://collabedit.com/static/css/combined_doc.css?v=4b43e" />
+        <script src="http://collabedit.com/static/js/jquery-1.6.2.min.js?v=a1a8c"></script>
+        <title>collabedit</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <style>
+    body{
+    background-color: #E3E3E3!important;
+    font-family: georgia,verdana,arial!important;
+}</style>
+    <body>
+        <div id="header">
+            <div id="logos">
+                <a id="logotext" href="/">collabedit</a>
+                <br>
+                <a id="subtitle" href="/">simple collaborative text</a>
+            </div>
+        </div>
+        <div id="login_info" style =display:inline-flex;margin:20px;margin-right:8%;>
+            <li class="dropdown user user-menu" style =list-style:none;>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <span class="hidden-xs" style ="color:white;font-size:25px"><%-name%></span>
+                    </a>
+                    <ul class="dropdown-menu" style ="text-align: center;background:#3CA0D0;border:0">
+                      <li>
+                            <div class="pull-left">
+                              <a href="/profile" class="btn btn-default btn-flat">My data</a>
+                            </div>
+                            <div class="pull-right">
+                              <a href="/signout" class="btn btn-default btn-flat">Sign out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+        </div>
+        <div id="main">
+            <ul>
+                <%for(let i=0;i<key.length;i++){%>
+                <li><a href ="http://127.0.0.1:3000/key/<%-key[i].key%>"><%-key[i].key%></a></li>
+                <%}%>
+            </ul>
+            
+        </div>
+            <div id="docnamediv">
+                <span id="docnamespan" style="border: 1px solid black;background-color: #E1F2F9;padding: 3px 15px 4px 15px">My key</span>
+            </div>
+            <iframe name="dlframe" style="display:none"></iframe>
+        <div id="footer">
+&copy; 2016 
+            <a href="/">collabedit.com</a>
+|
+            <a href="/about">about</a>
+|
+            <a href="/faq">faq</a>
+|
+            <a href="/help">help</a>
+|
+            <a href="/updates">updates</a>
+|
+            <a href="/legal">legal</a>
+        </div>
+    </body>
+</html>
