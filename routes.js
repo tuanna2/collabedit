@@ -9,14 +9,12 @@ routes.use(bodyParser.urlencoded({ extended: true }));
 routes.get('/',controllerHome);
 
 routes.get('/login',controllerUser.login_get);
-
-
 routes.post('/login',controllerUser.login_post);
 
 routes.get('/signup',controllerUser.signup_get);
 routes.post('/signup',controllerUser.signup_post);
 
-routes.get('/profile',controllerData.mykey);
+routes.get('/profile',controllerUser.mykey);
 routes.get('/signout',controllerUser.signout);
 
 routes.get('/new',controllerData.new);

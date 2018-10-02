@@ -8,6 +8,13 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../codemirror-5.40.2/lib/codemirror.css">
+        <script src="../codemirror-5.40.2/lib/codemirror.js"></script>
+        <script src="../codemirror-5.40.2/mode/clike/clike.js"></script>
+        <script src="../codemirror-5.40.2/mode/python/python.js"></script>
+        <script src="../codemirror-5.40.2/mode/javascript/javascript.js"></script>
+
+        <link rel = "stylesheet" href ="../codemirror-5.40.2/theme/dracula.css">
     </head>
     <style>
     body{
@@ -23,47 +30,71 @@
             </div>
         </div>
         <div id="login_info" style =display:inline-flex;margin:20px;margin-right:8%;>
-            <li class="dropdown user user-menu" style =list-style:none;>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <span class="hidden-xs" style ="color:white;font-size:25px"><%-name%></span>
+                <div class="login_info_buttons" >
+                    <a class="loginInfoButton" href="/login" <%-name==''?"":"style=display:none;"%>>
+                        <img src="http://collabedit.com/static/img/log_in.png">
                     </a>
-                    <ul class="dropdown-menu" style ="text-align: center;background:#3CA0D0;border:0">
-                      <li>
-                            <div class="pull-left">
-                              <a href="/profile" class="btn btn-default btn-flat">My data</a>
-                            </div>
-                            <div class="pull-right">
-                              <a href="/signout" class="btn btn-default btn-flat">Sign out</a>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-        </div>
+                </div>
+                <div class="login_info_buttons">
+                    <a class="loginInfoButton" href="/signup" <%-name==''?"":"style=display:none;"%>>
+                        <img src="http://collabedit.com/static/img/sign_up.png">
+                    </a>
+                </div>
+                <li class="dropdown user user-menu" style =list-style:none;>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                          <span class="hidden-xs" style ="color:white;font-size:25px"><%-name%></span>
+                        </a>
+                        <ul class="dropdown-menu" style ="text-align: center;background:#3CA0D0;border:0">
+                          <li>
+                                <div class="pull-left">
+                                  <a href="/profile" class="btn btn-default btn-flat">My data</a>
+                                </div>
+                                <div class="pull-right">
+                                  <a href="/signout" class="btn btn-default btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+            </div>
+    
         <div id="main">
  
             <div id="editor_container">
                 <form method="POST">
-                    <textarea name="TextArea" rows="20" cols="120"><%-value%></textarea>
-                <div id="edit_area_text_div">
-                    <textarea id="the_input" name="the_input" style="display:none"></textarea>
-                </div>
+                    <div style="float:left;border:2px solid yellow;width:70%">         
+                        <textarea name="TextArea" id="code"><%-value%></textarea>
+                    </div>
+                    <input id="getSelect" style="display:none" value = "<%-select%>">
+                    <script>
+                        $(function(){
+                            let getSelection= $("#getSelect").val();
+                            var editor = CodeMirror.fromTextArea(code, {
+                                lineNumbers: true,
+                                lineWrapping: true,
+                                mode:getSelection,
+                                theme:'dracula',
+                            }); 
+                        })
+                        
+                    </script>
                 <div id="sidebar_div">
                     <div style="margin-bottom: 10px">
                         <p class="chat_label">Programming Language</p>
-                        <select style="width:240px">
-                            <option>plain text</option>
+                        <select name="selectLang" style="width:240px">
+                            <option value="clike" <%-select=='clike'?'selected':'' %>>C/C++</option>
+                            <option value="python" <%-select=='python'?'selected':'' %>>Python</option>
+                            <option value="javascript" <%-select=='javascript'?'selected':'' %>>Javascript</option>
+                            <option value="text" <%-select=='text'?'selected':'' %>>Plain text</option>
+
                         </select>
                     </div>
-                    <input type="submit" onclick="alert('Success!')" style="margin:20px 100px;" value="Save">
+                    <input type="submit" style="margin:20px 100px;" value="Save">
                 </form>
                 </div>
                 <div style="clear:both"></div>
             </div>
-            <div id="docnamediv">
-                <span id="docnamespan" style="border: 1px solid black;background-color: #E1F2F9;padding: 3px 15px 4px 15px"><%-key%></span>
-            </div>
-            <iframe name="dlframe" style="display:none"></iframe>
-        <div id="footer">
+        </div>
+        <div id="footer" style="text-align: center;margin-top:50px">
 &copy; 2016 
             <a href="/">collabedit.com</a>
 |

@@ -12,40 +12,32 @@ controllerData.new = (req,res) => {
         newkey();
     }
     else
-        res.render("login",{err:"Please login"});
+        res.redirect("login",{err:"Please login"});
 }
 controllerData.key= (req,res)=>{
     if(req.session.saveName){
-        const view = async () =>{
+        let view = async () =>{
             let results =await data.view(req.params.key);
-            res.render('text',{name:req.session.saveName,value:results[0].text,key:req.params.key})
+            res.render('text',{name:req.session.saveName,value:results[0].text,select:results[0].selected,key:req.params.key})
+            
         }
         view();
     }
-    else
-        res.render("login",{err:"Please login"});
+    else{
+        let view = async () =>{
+            let results =await data.view(req.params.key);
+            res.render('text',{name:'',value:results[0].text,select:results[0].selected,key:req.params.key})
+        }
+        view();
+    }
 }
 controllerData.update =(req,res) =>{
-    if(req.session.saveName){
         const update = async() =>{
-            await data.update(req.params.key,req.body.TextArea);
+            await data.update(req.params.key,req.body.TextArea,req.body.selectLang);
             res.redirect("/key/"+req.params.key);
         }
         update();
-    }
-    else
-        res.render("login",{err:"Please login"});
 }
-controllerData.mykey =(req,res) =>{
-    if(req.session.saveName){
-        const mykey = async() =>{
-            let results=await data.keyInUsername(req.session.saveName);
-            res.render('profile',{key:results,name:req.session.saveName});
-        }
-        mykey();    
-    }
-    else
-        res.render("login",{err:"Please login"});
-}
+
 
 module.exports = controllerData;
