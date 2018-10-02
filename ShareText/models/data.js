@@ -3,7 +3,7 @@ const data = {};
 
 data.newkey= (key,text,Username) => {
     return new Promise((resolve,reject)=>{
-        knex(`key`).insert({key:key,text:text,Username:Username})
+        knex(`key`).insert({key:key,text:text,Username:Username,selected:'text'})
         .then(()=>{
             resolve();
         })
@@ -12,16 +12,16 @@ data.newkey= (key,text,Username) => {
         })
     })
 }
-data.update =(key,text) =>{
+data.update =(key,text,select) =>{
     return new Promise((resolve,reject)=>{
-    knex(`key`).where(`key`,key).update({text:text})
+    knex(`key`).where(`key`,key).update({text:text,selected:select})
     .then(()=> resolve())
     .catch(err =>reject("err update",err));
     });
 }
 data.view = (key) =>{
     return new Promise((resolve,reject) => {
-        knex(`key`).where(`key`,key).select('text')
+        knex(`key`).where(`key`,key).select('*')
         .then( results => {
             resolve(results);
         })
