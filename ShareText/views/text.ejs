@@ -3,18 +3,26 @@
 <html>
     <head>
         <link rel="stylesheet" href="http://collabedit.com/static/css/combined_doc.css?v=4b43e" />
-        <script src="http://collabedit.com/static/js/jquery-1.6.2.min.js?v=a1a8c"></script>
         <title><%-key%> - collabedit</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- codemirror -->
         <link rel="stylesheet" href="../codemirror-5.40.2/lib/codemirror.css">
         <script src="../codemirror-5.40.2/lib/codemirror.js"></script>
         <script src="../codemirror-5.40.2/mode/clike/clike.js"></script>
         <script src="../codemirror-5.40.2/mode/python/python.js"></script>
         <script src="../codemirror-5.40.2/mode/javascript/javascript.js"></script>
-
         <link rel = "stylesheet" href ="../codemirror-5.40.2/theme/dracula.css">
+        <style>
+        #messages { list-style-type: none; margin: 0; padding: 0; border:1px solid black;padding-bottom:40px;margin-bottom:10px}
+        #messages li { padding: 5px 10px; }
+        #messages li:nth-child(odd) { background: #eee; }
+        </style>
+        <!-- socket -->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.11.1.js"></script> -->
+     <script src="../xuly.js"></script>
     </head>
     <style>
     body{
@@ -60,23 +68,13 @@
         <div id="main">
  
             <div id="editor_container">
-                <form method="POST">
+                <form method="POST" id="form_auto_submit">
                     <div style="float:left;border:2px solid yellow;width:70%">         
-                        <textarea name="TextArea" id="code"><%-value%></textarea>
+                        <textarea  name="TextArea" id="code"><%-value%></textarea>
                     </div>
                     <input id="getSelect" style="display:none" value = "<%-select%>">
-                    <script>
-                        $(function(){
-                            let getSelection= $("#getSelect").val();
-                            var editor = CodeMirror.fromTextArea(code, {
-                                lineNumbers: true,
-                                lineWrapping: true,
-                                mode:getSelection,
-                                theme:'dracula',
-                            }); 
-                        })
-                        
-                    </script>
+                    <input id="getUsername" style="display:none" value = "<%-name%>">
+
                 <div id="sidebar_div">
                     <div style="margin-bottom: 10px">
                         <p class="chat_label">Programming Language</p>
@@ -85,11 +83,16 @@
                             <option value="python" <%-select=='python'?'selected':'' %>>Python</option>
                             <option value="javascript" <%-select=='javascript'?'selected':'' %>>Javascript</option>
                             <option value="text" <%-select=='text'?'selected':'' %>>Plain text</option>
-
                         </select>
                     </div>
-                    <input type="submit" style="margin:20px 100px;" value="Save">
+                    <!-- <input type="submit" style="margin:20px 100px;" value="Save"> -->
                 </form>
+                <ul id="messages"></ul>
+                    <form id="chatbox" action="">
+                    <input id="m" autocomplete="off"/>
+                    <button>Send</button>
+                    <div id="yourName"></div>
+                    </form>
                 </div>
                 <div style="clear:both"></div>
             </div>
@@ -109,4 +112,5 @@
             <a href="/legal">legal</a>
         </div>
     </body>
+    
 </html>

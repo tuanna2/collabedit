@@ -32,11 +32,13 @@ controllerData.key= (req,res)=>{
     }
 }
 controllerData.update =(req,res) =>{
+    if(req.session.saveName){
         const update = async() =>{
             await data.update(req.params.key,req.body.TextArea,req.body.selectLang);
             res.redirect("/key/"+req.params.key);
         }
         update();
+    }
 }
 
 
