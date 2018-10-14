@@ -41,5 +41,12 @@ data.keyInUsername = (Username)=>{
         });
     });
 }
+data.selectUsername = (key) =>{
+    return new Promise((resolve,reject)=>{
+        knex(`key`).where(`key`,key).select(`Username`)
+        .then(results => resolve(results))
+        .catch(err => reject ('err select Username',err));
+    });
+}
 
 module.exports = data;

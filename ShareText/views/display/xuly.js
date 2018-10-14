@@ -1,17 +1,17 @@
 $(document).ready(()=> {
     var UserName=$('#getUsername').val();
+    var per =$('#permission').val();
+    permission = parseInt(per);
     if(UserName =='' || UserName== null){
-        var permission = 1;
         UserName = prompt("Please enter your name!");
     }
     else{
-        var permission = 0;
         UserName += "(admin)";
     }
     $('#yourName').html("<br/><span>Your name: " + UserName +" </span>");
 
     const socket = io();
-        socket.emit('user-connect',UserName);
+        socket.emit('user-connecst',UserName);
         socket.on('user-connect',UserName =>{
             $('#messages').append($('<li>').text(UserName +" joined"));
         })
@@ -43,6 +43,12 @@ $(document).ready(()=> {
             $.post('',text);
         },2000);
     }); 
+    $('#selectLang').change(()=>{
+        editor.setOption({mode:$('#selectLang').val()})
+        
+        if(permission==0)
+            $.post('',{selectLang:$('#selectLang').val()})
+    }) 
     socket.on('realtime',value=>{
         if(permission==1)
             editor.setValue(value);

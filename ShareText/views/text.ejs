@@ -74,11 +74,12 @@
                     </div>
                     <input id="getSelect" style="display:none" value = "<%-select%>">
                     <input id="getUsername" style="display:none" value = "<%-name%>">
+                    <input id="permission" style="display:none" value = "<%-permission%>">
 
-                <div id="sidebar_div">
+                    <div id="sidebar_div">
                     <div style="margin-bottom: 10px">
                         <p class="chat_label">Programming Language</p>
-                        <select name="selectLang" style="width:240px">
+                        <select id='selectLang' name="selectLang" style="width:240px">
                             <option value="clike" <%-select=='clike'?'selected':'' %>>C/C++</option>
                             <option value="python" <%-select=='python'?'selected':'' %>>Python</option>
                             <option value="javascript" <%-select=='javascript'?'selected':'' %>>Javascript</option>

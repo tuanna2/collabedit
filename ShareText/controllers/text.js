@@ -18,7 +18,11 @@ controllerData.key= (req,res)=>{
     if(req.session.saveName){
         let view = async () =>{
             let results =await data.view(req.params.key);
-            res.render('text',{name:req.session.saveName,value:results[0].text,select:results[0].selected,key:req.params.key})
+            let admin = await data.selectUsername(req.params.key);
+            let permission=1;
+            if (admin[0].Username == req.session.saveName)
+                permission=0;
+            res.render('text',{permission:permission,name:req.session.saveName,value:results[0].text,select:results[0].selected,key:req.params.key})
             
         }
         view();
@@ -26,7 +30,7 @@ controllerData.key= (req,res)=>{
     else{
         let view = async () =>{
             let results =await data.view(req.params.key);
-            res.render('text',{name:'',value:results[0].text,select:results[0].selected,key:req.params.key})
+            res.render('text',{permission:1,name:'',value:results[0].text,select:results[0].selected,key:req.params.key})
         }
         view();
     }

@@ -6,6 +6,18 @@ const routes = require('./routes')
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+
+
+app.use(session({
+    secret: 'abcxuz',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge:1000*60*60 }
+  })) ; 
+app.use(express.static("views/display"));
+app.set("view engine","ejs"); 
+app.set("views","./views"); 
+app.use(routes);
 io.on('connection',socket =>{
     socket.on('user-connect',UserName =>{
         io.sockets.emit('user-connect',UserName);
@@ -20,17 +32,6 @@ io.on('connection',socket =>{
         socket.broadcast.emit('realtime',value)
     });
 })
-
-app.use(session({
-    secret: 'abcxuz',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { maxAge:1000*60*60 }
-  })) ; 
-app.use(express.static("views/display"));
-app.set("view engine","ejs"); 
-app.set("views","./views"); 
-app.use(routes);
 
 http.listen(3000,() => {                                         
     console.log("Server listening on port 3000!");
