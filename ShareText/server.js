@@ -3,9 +3,8 @@ const app = express();
 const session = require('express-session');
 const async = require("async");
 const routes = require('./routes')
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 
 app.use(session({
@@ -19,8 +18,9 @@ app.set("view engine","ejs");
 app.set("views","./views"); 
 app.use(routes);
 io.on('connection',socket =>{
+    var users =[];
     socket.on('user-connect',UserName =>{
-        io.sockets.emit('user-connect',UserName);
+        io.emit('user-connect',UserName);
         socket.on('disconnect',()=>{
             socket.broadcast.emit('user-disconnect',UserName)
         });
@@ -29,7 +29,10 @@ io.on('connection',socket =>{
         io.emit('server-send-data', data);
       });
     socket.on('realtime',value =>{
-        socket.broadcast.emit('realtime',value)
+        io.emit('realtime',value);
+    });
+    socket.on('langChange',lang=>{
+        io.emit('lang',lang);
     });
 })
 

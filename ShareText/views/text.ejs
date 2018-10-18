@@ -75,11 +75,12 @@
                     <input id="getSelect" style="display:none" value = "<%-select%>">
                     <input id="getUsername" style="display:none" value = "<%-name%>">
                     <input id="permission" style="display:none" value = "<%-permission%>">
+                    <input id="getKey" style="display:none" value = "<%-key%>">
 
                     <div id="sidebar_div">
                     <div style="margin-bottom: 10px">
                         <p class="chat_label">Programming Language</p>
-                        <select id='selectLang' name="selectLang" style="width:240px">
+                        <select <%-permission=='1'?'disabled':''%> id='selectLang' name="selectLang" style="width:240px">
                             <option value="clike" <%-select=='clike'?'selected':'' %>>C/C++</option>
                             <option value="python" <%-select=='python'?'selected':'' %>>Python</option>
                             <option value="javascript" <%-select=='javascript'?'selected':'' %>>Javascript</option>
