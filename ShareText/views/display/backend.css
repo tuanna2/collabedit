@@ -1,0 +1,218 @@
+/*
+This stylesheet actually shows up on the frontend as well as the backend.
+
+blues from http://colorschemedesigner.com/#3s11TvZvWw0w0
+lightest:       63ADD0
+lighter:   3CA0D0
+darker:    086FA1
+darkest:        034769
+greenish dark:  235D79
+
+gray: E3E3E3
+*/
+
+body {
+    background-color: #E3E3E3;
+    font-family: georgia,verdana,arial;
+}
+
+p {
+    padding: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style-type: disc;
+    margin-left: 30px;
+}
+
+ol {
+    list-style-type: decimal;
+    margin-left: 30px;
+}
+
+#header {
+    background-color: #3CA0D0;
+    height: 90px;
+}
+
+#logos {
+    padding: 15px;
+}
+
+#logos a {
+    background-color: #3CA0D0;
+    z-index: 1;
+    position: relative;
+}
+
+#logotext {
+    color: white;
+    font-size: 2.5em;
+    font-family: "trebuchet ms",arial,sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#subtitle {
+    margin-top: 5px;
+    color: white;
+    font-size: 1em;
+    font-family: "trebuchet ms",arial,sans-serif;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#messagediv {
+    font-size: 1.2em;
+    padding: 5px;
+    margin-bottom: 15px;
+    background-color: #63ADD0;
+    width: 50%;
+}
+
+#tabsdiv {
+    height: 19px;
+}
+
+#tabs {
+    margin-left: 40px;
+    font-family: georgia,verdana,arial;
+}
+
+#tabs li {
+    background-color: #086FA1;
+    display: inline;
+    margin-left: 5px;
+    font-size: .9em;
+    padding: 8px;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    height: 23px;
+}
+
+#tabs a {
+    color: white;
+    text-decoration: none;
+}
+
+.activetab {
+    font-weight: bold;
+    background-color: #E3E3E3 !important;
+}
+
+#ch-block {
+    position: absolute;
+    top: 0px;
+    right: 50%;
+    margin-right: -520px;
+}
+
+#ch-block-img {
+    height: 90px;
+    width: 728px;
+    box-shadow: 0px 0px 1px #333;
+}
+
+#login_info {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    border: none;
+    padding: 5px;
+    margin-top: 5px;
+    z-index: 1;
+}
+
+.loginInfoButton {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.linkBarText {
+    font-size: .8em;
+}
+
+.linkBarText a {
+    padding-left: 5px;
+    padding-right: 5px;
+    color: white;
+}
+
+#main {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    padding: 40px;
+    background-color: white;
+}
+
+#footer {
+    margin-top: 15px;
+    font-size: .7em;
+    color: #666666;
+    text-align: center;
+}
+
+#footer a {
+    color: black;
+    font-size: 1.0em;
+}
+
+.label1 {
+    padding: 3px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.formlabel {
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 3px;
+    margin-top: 15px;
+}
+
+.errmsg {
+    margin-top: 10px;
+    font-size: 1.1em;
+    color: red;
+}
+
+.listtable {
+    margin-top: 15px;
+}
+
+.listtable tr td {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    height: 16px;
+    border: none;
+}
+
+.listtable tr th {
+    border: none;
+    border-bottom: solid black 2px;
+    padding: 4px;
+}
+
+.zebra_table_altcolor td {
+    background-color: #DFF3FF;
+}
+
+#codinghire_info {
+    background-color: #FFC873;
+    text-align: center;
+    padding: 20px;
+    margin: auto;
+    width: 600px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px; /* future proofing */
+}
+
+.IN-widget {
+    margin-left: 40px;
+}

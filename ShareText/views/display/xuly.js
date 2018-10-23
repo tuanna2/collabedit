@@ -10,13 +10,27 @@ $(document).ready(()=> {
         UserName += "(admin)";
     }
     $('#yourName').html("<br/><span>Your name: " + UserName +" </span>");
+    var key=$('#getKey').val();
+    socket.emit('room',key);
     var permission = parseInt($('#permission').val());
             socket.emit('user-connect',UserName);
-            socket.on('user-connect',UserName =>{
-                $('#messages').append($('<li>').text(UserName +" joined"));
+            socket.on('user-connect',obj =>{
+                $('#messages').append($('<li>').text(obj.UserName +" joined"));
+                let array = []
+                obj.online.forEach(name=>{
+                    array.push(name.UserName);
+                });
+                $('#online').val(array);
+                $('#ol').html(array.length);
             })
-            socket.on('user-disconnect',UserName =>{
-                $('#messages').append($('<li>').text(UserName +" left"));
+            socket.on('user-disconnect',obj =>{
+                $('#messages').append($('<li>').text(obj.UserName +" left"));
+                let array = []
+                obj.online.forEach(name=>{
+                    array.push(name.UserName);
+                });
+                $('#online').val(array);
+                $('#ol').html(array.length);
             })
         $('#chatbox').submit(()=>{
             socket.emit('client-send-data',UserName +":" + $('#m').val());

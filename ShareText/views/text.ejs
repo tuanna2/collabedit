@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <link rel="stylesheet" href="http://collabedit.com/static/css/combined_doc.css?v=4b43e" />
+        <link rel="stylesheet" href="../../combined_doc.css" />
         <title><%-key%> - collabedit</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -21,7 +21,6 @@
         </style>
         <!-- socket -->
     <script src="/socket.io/socket.io.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-1.11.1.js"></script> -->
      <script src="../xuly.js"></script>
     </head>
     <style>
@@ -40,12 +39,12 @@
         <div id="login_info" style =display:inline-flex;margin:20px;margin-right:8%;>
                 <div class="login_info_buttons" >
                     <a class="loginInfoButton" href="/login" <%-name==''?"":"style=display:none;"%>>
-                        <img src="http://collabedit.com/static/img/log_in.png">
+                        <img src="../../log_in.png">
                     </a>
                 </div>
                 <div class="login_info_buttons">
                     <a class="loginInfoButton" href="/signup" <%-name==''?"":"style=display:none;"%>>
-                        <img src="http://collabedit.com/static/img/sign_up.png">
+                        <img src="../../sign_up.png">
                     </a>
                 </div>
                 <li class="dropdown user user-menu" style =list-style:none;>
@@ -87,14 +86,16 @@
                             <option value="text" <%-select=='text'?'selected':'' %>>Plain text</option>
                         </select>
                     </div>
-                    <!-- <input type="submit" style="margin:20px 100px;" value="Save"> -->
                 </form>
+                <p class="chat_label">Chat box</p>
                 <ul id="messages"></ul>
                     <form id="chatbox" action="">
                     <input id="m" autocomplete="off"/>
                     <button>Send</button>
                     <div id="yourName"></div>
                     </form>
+                <p class="chat_label">Online :<span id="ol" class="chat_label"></span></p>
+                <textarea id="online" rows="2" cols="26" disabled style="background-color: #E1F2F9;padding:8px;"></textarea>
                 </div>
                 <div style="clear:both"></div>
             </div>

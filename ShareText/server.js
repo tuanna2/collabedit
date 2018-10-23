@@ -17,23 +17,42 @@ app.use(express.static("views/display"));
 app.set("view engine","ejs"); 
 app.set("views","./views"); 
 app.use(routes);
+var active_users =[];
 io.on('connection',socket =>{
-    var users =[];
-    socket.on('user-connect',UserName =>{
-        io.emit('user-connect',UserName);
-        socket.on('disconnect',()=>{
-            socket.broadcast.emit('user-disconnect',UserName)
+    // var total=io.engine.clientsCount; // tong so nguoi online
+    socket.on('room',key=>{
+        socket.join(key);
+        socket.on('user-connect',UserName =>{
+            active_users.push({"id": socket.id,"UserName":UserName,"key":key});
+            // io.in(key).clients((err,clients) => {
+            //     console.log(clients); 
+            // });
+            let objRoom =active_users.filter(obj=>{
+                return obj.key == key;
+            });
+            io.to(key).emit('user-connect',{UserName:UserName,online:objRoom});
+            socket.on('disconnect',()=>{
+                active_users.splice(active_users.findIndex(v=>v.id == socket.id),1);
+                let objRoom =active_users.filter(obj=>{
+                    return obj.key == key;
+                });
+                io.to(key).emit('user-disconnect',{UserName:UserName,online:objRoom});
+            });
+        });
+        //chatbox:
+        socket.on('client-send-data', data => {
+            io.to(key).emit('server-send-data', data);
+          });
+        //shareText:
+        socket.on('realtime',value =>{
+            io.to(key).emit('realtime',value);
+        });
+        //change language:
+        socket.on('langChange',lang=>{
+            io.to(key).emit('lang',lang);
         });
     });
-    socket.on('client-send-data', data => {
-        io.emit('server-send-data', data);
-      });
-    socket.on('realtime',value =>{
-        io.emit('realtime',value);
-    });
-    socket.on('langChange',lang=>{
-        io.emit('lang',lang);
-    });
+        
 })
 
 http.listen(3000,() => {                                         
