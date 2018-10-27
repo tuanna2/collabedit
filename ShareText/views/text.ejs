@@ -4,9 +4,9 @@
     <head>
         <link rel="stylesheet" href="../../combined_doc.css" />
         <title><%-key%> - collabedit</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
+        <script src="../bootstrap/jquery.min.js"></script>
+        <script src="../bootstrap/bootstrap.min.js"></script>
         <!-- codemirror -->
         <link rel="stylesheet" href="../codemirror-5.40.2/lib/codemirror.css">
         <script src="../codemirror-5.40.2/lib/codemirror.js"></script>
@@ -18,10 +18,12 @@
         #messages { list-style-type: none; margin: 0; padding: 0; border:1px solid black;padding-bottom:40px;margin-bottom:10px}
         #messages li { padding: 5px 10px; }
         #messages li:nth-child(odd) { background: #eee; }
+        .icon-user{float: right }
+        #person{position: relative}
         </style>
         <!-- socket -->
     <script src="/socket.io/socket.io.js"></script>
-     <script src="../xuly.js"></script>
+     <script src="../socket-io.js"></script>
     </head>
     <style>
     body{
@@ -75,11 +77,12 @@
                     <input id="getUsername" style="display:none" value = "<%-name%>">
                     <input id="permission" style="display:none" value = "<%-permission%>">
                     <input id="getKey" style="display:none" value = "<%-key%>">
+                    <input id="getAdmin" style="display:none" value = "<%-admin%>">
 
                     <div id="sidebar_div">
                     <div style="margin-bottom: 10px">
                         <p class="chat_label">Programming Language</p>
-                        <select <%-permission=='1'?'disabled':''%> id='selectLang' name="selectLang" style="width:240px">
+                        <select id='selectLang' name="selectLang" style="width:240px">
                             <option value="clike" <%-select=='clike'?'selected':'' %>>C/C++</option>
                             <option value="python" <%-select=='python'?'selected':'' %>>Python</option>
                             <option value="javascript" <%-select=='javascript'?'selected':'' %>>Javascript</option>
@@ -95,8 +98,13 @@
                     <div id="yourName"></div>
                     </form>
                 <p class="chat_label">Online :<span id="ol" class="chat_label"></span></p>
-                <textarea id="online" rows="2" cols="26" disabled style="background-color: #E1F2F9;padding:8px;"></textarea>
+                <div class ="bluediv">
+                    <ul id="person"></ul>
                 </div>
+                <% if(-permission==0){ %>
+                <br><img style = "width: 20px; height: 20px" src="../admin.png"><span> : Add permission</span>
+                <%}%>
+            </div>
                 <div style="clear:both"></div>
             </div>
         </div>

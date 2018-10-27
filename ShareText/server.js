@@ -5,7 +5,7 @@ const async = require("async");
 const routes = require('./routes')
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-
+http.listen(3000);
 
 app.use(session({
     secret: 'abcxuz',
@@ -25,16 +25,16 @@ io.on('connection',socket =>{
         socket.on('user-connect',UserName =>{
             active_users.push({"id": socket.id,"UserName":UserName,"key":key});
             // io.in(key).clients((err,clients) => {
-            //     console.log(clients); 
+            //     console.log(clients); //so nguoi trong room
             // });
             let objRoom =active_users.filter(obj=>{
-                return obj.key == key;
+                return obj.key == key; //return object info room
             });
             io.to(key).emit('user-connect',{UserName:UserName,online:objRoom});
             socket.on('disconnect',()=>{
-                active_users.splice(active_users.findIndex(v=>v.id == socket.id),1);
+                active_users.splice(active_users.findIndex(v=>v.id == socket.id),1); //pop user
                 let objRoom =active_users.filter(obj=>{
-                    return obj.key == key;
+                    return obj.key == key; 
                 });
                 io.to(key).emit('user-disconnect',{UserName:UserName,online:objRoom});
             });
@@ -51,11 +51,15 @@ io.on('connection',socket =>{
         socket.on('langChange',lang=>{
             io.to(key).emit('lang',lang);
         });
+        //add :
+        socket.on('addCTV',admin=>{
+            io.to(key).emit('addCTV',admin);
+            let findID=active_users.filter(obj=>{
+                return obj.key == key && obj.UserName==admin; //return object info room
+            });
+            socket.broadcast.to(findID[0].id).emit('CTV');
+        })
     });
         
 })
-
-http.listen(3000,() => {                                         
-    console.log("Server listening on port 3000!");
-});
 
