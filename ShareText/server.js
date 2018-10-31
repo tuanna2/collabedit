@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const async = require("async");
-const routes = require('./routes')
+const routes = require('./routes');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 http.listen(3000);
@@ -58,7 +58,9 @@ io.on('connection',socket =>{
                 return obj.key == key && obj.UserName==admin; //return object info room
             });
             socket.broadcast.to(findID[0].id).emit('CTV');
-        })
+        });
+        //run code
+        socket.on('compiler',data=>io.to(key).emit('compiler',data));
     });
         
 })

@@ -18,8 +18,29 @@
         #messages { list-style-type: none; margin: 0; padding: 0; border:1px solid black;padding-bottom:40px;margin-bottom:10px}
         #messages li { padding: 5px 10px; }
         #messages li:nth-child(odd) { background: #eee; }
-        .icon-user{float: right }
-        #person{position: relative}
+        .icon-user{float: right; }
+        #person{position: relative;list-style: none}
+        .tuan::before{
+            content: "\2022";
+            color:blue;
+            font-weight: bold;
+            display: inline-block; 
+            width: 1em;
+            margin-left: -2em;
+            line-height: 1em;
+        }
+        .CodeMirror {
+         border: 1px solid rgb(178, 185, 81);
+         height: 450px;
+        }
+        #compiler{
+            background-color: #333;
+            color: #eee;
+            padding: 7px 17px;
+            border: 1px solid #666;
+            margin-top: 10px;
+            border-radius: 3px;
+        }
         </style>
         <!-- socket -->
     <script src="/socket.io/socket.io.js"></script>
@@ -67,11 +88,21 @@
             </div>
     
         <div id="main">
- 
             <div id="editor_container">
                 <form method="POST" id="form_auto_submit">
-                    <div style="float:left;border:2px solid yellow;width:70%">         
+                    <div style="float:left;width:80%">    
                         <textarea  name="TextArea" id="code"><%-value%></textarea>
+                        <button  id="compiler" <%=permission==1?'style=display:none':'' %>>Run</button>
+                        <div>
+                            <div class="divleft" style="width: 50%;float: left;margin-top:20px">
+                                <p>Input</p>
+                                <textarea <%=permission==1?'disabled':'' %> style="background-color:rgb(37, 39, 51);color:#f1fa8c;white-space:pre-wrap" id= "input" rows = 5 cols =60 ></textarea>
+                            </div>
+                            <div class="divright" style="width: 50%;float: left;margin-top:20px">
+                                <p>Output</p>
+                                <textarea id= "console" disabled style="background-color:rgb(37, 39, 51);color:#f1fa8c;white-space:pre-wrap" rows = 5 cols =60></textarea>
+                            </div>
+                        </div>    
                     </div>
                     <input id="getSelect" style="display:none" value = "<%-select%>">
                     <input id="getUsername" style="display:none" value = "<%-name%>">
@@ -83,7 +114,7 @@
                     <div style="margin-bottom: 10px">
                         <p class="chat_label">Programming Language</p>
                         <select id='selectLang' name="selectLang" style="width:240px">
-                            <option value="clike" <%-select=='clike'?'selected':'' %>>C/C++</option>
+                            <option value="clike" <%-select=='clike'?'selected':'' %>>C++</option>
                             <option value="python" <%-select=='python'?'selected':'' %>>Python</option>
                             <option value="javascript" <%-select=='javascript'?'selected':'' %>>Javascript</option>
                             <option value="text" <%-select=='text'?'selected':'' %>>Plain text</option>
