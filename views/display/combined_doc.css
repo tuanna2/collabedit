@@ -441,3 +441,9 @@ ol {
     margin-top: 10px;
     border-radius: 3px;
 }
+button:disabled {
+    cursor: not-allowed !important;
+  }
+#compiler:hover{
+    background-color:#666 !important;
+}
