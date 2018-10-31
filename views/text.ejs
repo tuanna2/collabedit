@@ -2,19 +2,21 @@
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <link rel="stylesheet" href="http://collabedit.com/static/css/combined_doc.css?v=4b43e" />
-        <script src="http://collabedit.com/static/js/jquery-1.6.2.min.js?v=a1a8c"></script>
+        <link rel="stylesheet" href="../../combined_doc.css" />
         <title><%-key%> - collabedit</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
+        <script src="../bootstrap/jquery.min.js"></script>
+        <script src="../bootstrap/bootstrap.min.js"></script>
+        <!-- codemirror -->
         <link rel="stylesheet" href="../codemirror-5.40.2/lib/codemirror.css">
         <script src="../codemirror-5.40.2/lib/codemirror.js"></script>
         <script src="../codemirror-5.40.2/mode/clike/clike.js"></script>
         <script src="../codemirror-5.40.2/mode/python/python.js"></script>
         <script src="../codemirror-5.40.2/mode/javascript/javascript.js"></script>
-
         <link rel = "stylesheet" href ="../codemirror-5.40.2/theme/dracula.css">
+        <!-- socket -->
+    <script src="/socket.io/socket.io.js"></script>
+     <script src="../socket-io.js"></script>
     </head>
     <style>
     body{
@@ -32,12 +34,12 @@
         <div id="login_info" style =display:inline-flex;margin:20px;margin-right:8%;>
                 <div class="login_info_buttons" >
                     <a class="loginInfoButton" href="/login" <%-name==''?"":"style=display:none;"%>>
-                        <img src="http://collabedit.com/static/img/log_in.png">
+                        <img src="../../log_in.png">
                     </a>
                 </div>
                 <div class="login_info_buttons">
                     <a class="loginInfoButton" href="/signup" <%-name==''?"":"style=display:none;"%>>
-                        <img src="http://collabedit.com/static/img/sign_up.png">
+                        <img src="../../sign_up.png">
                     </a>
                 </div>
                 <li class="dropdown user user-menu" style =list-style:none;>
@@ -58,39 +60,54 @@
             </div>
     
         <div id="main">
- 
             <div id="editor_container">
-                <form method="POST">
-                    <div style="float:left;border:2px solid yellow;width:70%">         
-                        <textarea name="TextArea" id="code"><%-value%></textarea>
+                <form method="POST" id="form_auto_submit">
+                    <div style="float:left;width:80%">    
+                        <textarea  name="TextArea" id="code"><%-value%></textarea>
+                        <button  id="compiler" <%=permission==1?'style=display:none':'' %>>Run</button>
+                        <div>
+                            <div class="divleft" style="width: 50%;float: left;margin-top:20px">
+                                <p>Input</p>
+                                <textarea <%=permission==1?'disabled':'' %> style="background-color:rgb(37, 39, 51);color:#f1fa8c;white-space:pre-wrap" id= "input" rows = 5 cols =60 ></textarea>
+                            </div>
+                            <div class="divright" style="width: 50%;float: left;margin-top:20px">
+                                <p>Output</p>
+                                <textarea id= "console" disabled style="background-color:rgb(37, 39, 51);color:#f1fa8c;white-space:pre-wrap" rows = 5 cols =60></textarea>
+                            </div>
+                        </div>    
                     </div>
                     <input id="getSelect" style="display:none" value = "<%-select%>">
-                    <script>
-                        $(function(){
-                            let getSelection= $("#getSelect").val();
-                            var editor = CodeMirror.fromTextArea(code, {
-                                lineNumbers: true,
-                                lineWrapping: true,
-                                mode:getSelection,
-                                theme:'dracula',
-                            }); 
-                        })
-                        
-                    </script>
-                <div id="sidebar_div">
+                    <input id="getUsername" style="display:none" value = "<%-name%>">
+                    <input id="permission" style="display:none" value = "<%-permission%>">
+                    <input id="getKey" style="display:none" value = "<%-key%>">
+                    <input id="getAdmin" style="display:none" value = "<%-admin%>">
+
+                    <div id="sidebar_div">
                     <div style="margin-bottom: 10px">
                         <p class="chat_label">Programming Language</p>
-                        <select name="selectLang" style="width:240px">
-                            <option value="clike" <%-select=='clike'?'selected':'' %>>C/C++</option>
+                        <select id='selectLang' name="selectLang" style="width:240px">
+                            <option value="clike" <%-select=='clike'?'selected':'' %>>C++</option>
                             <option value="python" <%-select=='python'?'selected':'' %>>Python</option>
                             <option value="javascript" <%-select=='javascript'?'selected':'' %>>Javascript</option>
                             <option value="text" <%-select=='text'?'selected':'' %>>Plain text</option>
-
                         </select>
                     </div>
-                    <input type="submit" style="margin:20px 100px;" value="Save">
                 </form>
+                <p class="chat_label">Chat box</p>
+                <ul id="messages"></ul>
+                    <form id="chatbox" action="">
+                    <input id="m" autocomplete="off"/>
+                    <button>Send</button>
+                    <div id="yourName"></div>
+                    </form>
+                <p class="chat_label">Online :<span id="ol" class="chat_label"></span></p>
+                <div class ="bluediv">
+                    <ul id="person"></ul>
                 </div>
+                <% if(-permission==0){ %>
+                <br><img style = "width: 20px; height: 20px" src="../admin.png"><span> : Add permission</span>
+                <%}%>
+            </div>
                 <div style="clear:both"></div>
             </div>
         </div>
@@ -109,4 +126,5 @@
             <a href="/legal">legal</a>
         </div>
     </body>
+    
 </html>

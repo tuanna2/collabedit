@@ -12,24 +12,24 @@ controllerData.new = (req,res) => {
         newkey();
     }
     else
-        res.redirect("login",{err:"Please login"});
+        res.redirect("login");
 }
 controllerData.key= (req,res)=>{
-    if(req.session.saveName){
-        let view = async () =>{
-            let results =await data.view(req.params.key);
-            res.render('text',{name:req.session.saveName,value:results[0].text,select:results[0].selected,key:req.params.key})
-            
+    let view = async () =>{
+        if(req.session.saveName){
+                let results =await data.view(req.params.key);
+                let admin = await data.selectUsername(req.params.key);
+                let permission=(admin[0].Username == req.session.saveName)?0:1;
+                res.render('text',{admin:admin[0].Username,permission:permission,name:req.session.saveName,value:results[0].text,select:results[0].selected,key:req.params.key})
         }
-        view();
-    }
-    else{
-        let view = async () =>{
+        else{
             let results =await data.view(req.params.key);
-            res.render('text',{name:'',value:results[0].text,select:results[0].selected,key:req.params.key})
+            let admin = await data.selectUsername(req.params.key);
+            res.render('text',{admin:admin[0].Username,permission:1,name:'',value:results[0].text,select:results[0].selected,key:req.params.key})
         }
-        view();
     }
+        view().catch(()=>res.redirect('../login'));
+    
 }
 controllerData.update =(req,res) =>{
         const update = async() =>{
@@ -38,6 +38,5 @@ controllerData.update =(req,res) =>{
         }
         update();
 }
-
 
 module.exports = controllerData;
