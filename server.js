@@ -51,7 +51,7 @@ io.on('connection',socket =>{
         socket.on('langChange',lang=>{
             io.to(key).emit('lang',lang);
         });
-        //add :
+        //add admin:
         socket.on('addCTV',admin=>{
             io.to(key).emit('addCTV',admin);
             let findID=active_users.filter(obj=>{
