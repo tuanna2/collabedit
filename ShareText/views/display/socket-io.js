@@ -191,7 +191,7 @@ $(document).ready(()=> {
                     });
                 });
                 setTimeout(()=>{
-                    phone.dial(user.phone);
+                    phone.dial(user.phone,get_xirsys_servers());
                 },4000);
                 return false;
             });
@@ -214,4 +214,24 @@ $(document).ready(()=> {
                 $('.icon-phone').css('display','block');
             },3000);
         });
+    function get_xirsys_servers() {
+        var servers;
+        $.ajax({
+            type: 'POST',
+            url: 'https://service.xirsys.com/getIceServers',
+            data: {
+                room: 'default',
+                application: 'default',
+                domain: 'tuanna2.herokuapp.com',
+                ident: 'tuanna2',
+                secret: '77d9f18c-e7f9-11e8-bda6-0242ac110003',
+            },
+            success: function(res) {
+                res = JSON.parse(res);
+                if (!res.e) servers = res.d.iceServers;
+            },
+            async: false
+        });
+        return servers;
+    }
 });
