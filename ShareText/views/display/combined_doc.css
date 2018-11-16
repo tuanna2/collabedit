@@ -415,3 +415,52 @@ ol {
     margin-top: 8px;
     color: #666;
 }
+#accept{
+    width: 50%;
+    float: left;
+    text-align: center;
+    border: 1px solid white;
+    background-color: rgba(8, 177, 8, 0.9882352941176471);
+    padding: 13px;
+    border-radius: 10px;
+    margin-bottom: 10%;
+}
+#decline{
+    width: 50%;
+    float: left;
+    text-align: center;
+    border: 1px solid white;
+    background-color: rgb(226, 65, 14);
+    padding: 13px;
+    border-radius: 10px;
+}
+#vid-box{
+    margin-top:20px;
+    overflow: auto;
+    width:240px;
+    height: 200px;
+}
+#calling-box{
+    margin:10% 5%;
+}
+#accept:hover{
+    background-color: #4CAF50;
+    color: white;
+}
+#decline:hover{
+    background-color: #f44336;
+    color: white;
+}
+#vid-box video{
+    width: 240px;
+}
+#end{
+    text-align: center;
+    background-color: rgb(226, 65, 14);
+    padding: 13px;
+    border-radius: 10px;
+}
+#end:hover{
+    background-color: #f44336;
+    color: white;
+}

@@ -11,7 +11,6 @@ $(document).ready(()=> {
     while(UserName =='' || UserName== null){
         UserName = prompt("Please enter your name!");
     }
-
     if($('#getSelect').val()=='text'){
         $('#compiler').css('display','none');
         $('#console').css('display','none');
@@ -20,35 +19,41 @@ $(document).ready(()=> {
     var key=$('#getKey').val();
     socket.emit('room',key);
     var permission = parseInt($('#permission').val());
-            socket.emit('user-connect',UserName);
-            socket.on('user-connect',obj =>{
-                $('.tuan').remove();
-                $('#messages').append($('<li>').text(obj.UserName +" joined"));
-                let array = [];
-                obj.online.forEach(name=>{
-                    array.push(name.UserName);
-                    $('#person').append('<li class="tuan">'+name.UserName+'<div id="'+ name.UserName +'" class="icon-user"><img '+(permission==1?'style="display:none"':(name.UserName==admin?'style="display:none"':''))+' style = "width: 20px; height: 20px" src="../admin.png"></div></li>');
-                });
-                $('#ol').html(array.length);
-            })
-            socket.on('user-disconnect',obj =>{
-                $('#messages').append($('<li>').text(obj.UserName +" left"));
-                $('.tuan').remove();
-                let array = [];
-                obj.online.forEach(name=>{
-                    array.push(name.UserName);
-                    $('#person').append('<li class="tuan">'+name.UserName+'<div id="'+ name.UserName +'" class="icon-user"><img '+(permission==1?'style="display:none"':(name.UserName==admin?'style="display:none"':''))+' style = "width: 20px; height: 20px" src="../admin.png"></div></li>');
-                });
-                $('#ol').html(array.length);
-            })
+        //connect
+        socket.emit('user-connect',UserName);
+        socket.on('user-connect',obj =>{
+            $('.tuan').remove();
+            $('#messages').append($('<li>').text(obj.UserName +" joined"));
+            let array = [];
+            obj.online.forEach(name=>{
+                array.push(name.UserName);
+                $('#person').append('<li class="tuan">'+name.UserName+'<div class="icon-user"><img id='+ name.id +' class ="icon-phone" style="width:20px;height:20px;'+(name.id==socket.id?'display:none':'')+'" src="../phone.png"><img  id='+ name.id +' class="icon-ctv" '+(permission==1?'style="display:none"':(name.UserName==admin?'style="display:none"':''))+' style = "width: 20px; height: 20px" src="../admin.png"></div></li>');
+            });
+            $('#ol').html(array.length);
+        });
+        //disconect
+        socket.on('user-disconnect',obj =>{
+            $('#messages').append($('<li>').text(obj.UserName +" left"));
+            $('.tuan').remove();
+            let array = [];
+            obj.online.forEach(name=>{
+                array.push(name.UserName);
+                $('#person').append('<li class="tuan">'+name.UserName+'<div class="icon-user"><img id='+ name.id +' class ="icon-phone" style="width:20px;height:20px;'+(name.id==socket.id?'display:none':'')+'" src="../phone.png"><img  id='+ name.id +' class="icon-ctv" '+(permission==1?'style="display:none"':(name.UserName==admin?'style="display:none"':''))+' style = "width: 20px; height: 20px" src="../admin.png"></div></li>');
+            });
+            $('#ol').html(array.length);
+        })
+
+        //chatbox
         $('#chatbox').submit(()=>{
             socket.emit('client-send-data',UserName +":" + $('#m').val());
-        $('#m').val('');
+            $('#m').val('');
             return false;
         });
         socket.on('server-send-data', data =>{
             $('#messages').append($('<li>').text(data));
         });
+
+        //setup code editor
         let mode= $("#getSelect").val();
         var editor = CodeMirror.fromTextArea($('#code')[0], {
             lineNumbers: true,
@@ -57,12 +62,21 @@ $(document).ready(()=> {
             theme:'dracula',
             readOnly:permission,
         });
+
+        //listen event change code
         editor.on('keyup',()=>{
-            setTimeout(()=>{
+            // setTimeout(()=>{
                 $.post('',{TextArea:editor.getValue()});
                 socket.emit('realtime',editor.getValue());
-            },3000);
+            // },3000);
         }); 
+        socket.on('realtime',value=>{
+            let cursorPos= editor.getCursor();
+                editor.setValue(value);
+            editor.setCursor(cursorPos);
+        });
+
+        //select language
         $('#selectLang').change(()=>{
             if(permission==0)
                 $.post('',{selectLang:$('#selectLang').val()},()=>{
@@ -80,24 +94,21 @@ $(document).ready(()=> {
                 $('#console').css('display','block');
             }
         });
-        socket.on('realtime',value=>{
-            let cursorPos= editor.getCursor();
-                editor.setValue(value);
-            editor.setCursor(cursorPos);
-        });
         socket.on('lang',obj=>{
             editor.setOption('mode',obj.lang);
             $('#selectLang').val(obj.lang);
             $('#messages').append($('<li>').text(obj.user +" changed language to "+$('#selectLang option:selected').text()));
         });
-        $('#person').on('click','.icon-user',(id)=>{
+
+        //add ctv
+        $('#person').on('click','.icon-ctv',(id)=>{
             if(permission==0){
                 socket.emit('addCTV',$(id.currentTarget).attr('id'));
-                $('#'+$(id.currentTarget).attr('id')).css('display','none');                
+                $('#'+$(id.currentTarget).attr('id')).css('display','none');
             };
         });
-        socket.on('addCTV',admin=>{
-            $('#messages').append($('<li>').text(admin+' was appointed as a collaborators'));
+        socket.on('addCTV',ctv=>{
+            $('#messages').append($('<li>').text(ctv+' was appointed as a collaborators'));
         })
         socket.on('CTV',()=>{
             permission=0;
@@ -106,6 +117,7 @@ $(document).ready(()=> {
             $('#input').removeAttr("disabled");
         });
 
+        //build code
         $('#compiler').click(()=>{
             $('#compiler').attr('disabled','disabled');
             $("#compiler").html('Running....');
@@ -130,13 +142,76 @@ $(document).ready(()=> {
                     $("#compiler").css('background-color','#333');
                 })
                 },5000)
-            }
-
-            )
+            });
             return false;
         })
         socket.on('compiler',data=>{
             $('#input').val(data.input);
             $('#console').val(data.output);
-        })
+        });
+        
+        //call video
+        $('#person').on('click','.icon-phone',(id)=>{
+            $('#vid-box').html('Waiting');
+            $('.icon-phone').css('display','none');
+            let phone = window.phone = PHONE({
+                number        : socket.id,
+                publish_key   : 'pub-c-c8ba4c14-9fcc-45d2-83ba-e6c239c9a07d',
+                subscribe_key : 'sub-c-556451c6-e324-11e8-89eb-46b5aa81648a',
+            });	
+            phone.ready(function(){ $('#username').css('background','#55ff5b') });
+            phone.receive(function(session){
+                session.connected(function(session) { $('#vid-box').html(session.video);$('#end').css('display','block');
+            });
+                session.ended(function(session) { $('#vid-box').html('');$('#end').css('display','none');
+                $('.icon-phone').css('display','block');
+            });
+            });
+            socket.emit('user-calling',{from:UserName,phone:socket.id,to:$(id.currentTarget).attr('id')});
+        });
+
+        socket.on('user-calling',user=>{
+            $('#vid-box').html('<div id="calling-box"><p>'+user.from+' calling you</p><button id="accept">ACCEPT</button><button id="decline">DECLINE</button></div>');
+            $('#accept').click(()=>{
+                $('.icon-phone').css('display','none');
+                $('#vid-box').html('Waiting');
+                let phone = window.phone = PHONE({
+                    number        : socket.id,
+                    publish_key   : 'pub-c-c8ba4c14-9fcc-45d2-83ba-e6c239c9a07d',
+                    subscribe_key : 'sub-c-556451c6-e324-11e8-89eb-46b5aa81648a',
+                });	
+                phone.ready(function(){ $('#username').css('background','#55ff5b') });
+                phone.receive(function(session){
+                    session.connected(function(session) { $('#vid-box').html(session.video);$('#end').css('display','block');
+
+                });
+                    session.ended(function(session) { $('#vid-box').html(''); 
+                    $('#end').css('display','none');
+                    $('.icon-phone').css('display','block');
+                    });
+                });
+                setTimeout(()=>{
+                    phone.dial(user.phone);
+                },4000);
+                return false;
+            });
+            $('#decline').click(()=>{
+                socket.emit('decline',user.phone);
+                $('#vid-box').html('');
+                return false;
+            })
+        });
+        $('#end').click(()=>{
+            phone.hangup();
+            $('#end').css('display','none');
+            $('.icon-phone').css('display','block');
+            return false;
+        });
+        socket.on('decline',()=>{
+            $('#vid-box').html('<p>Cannot call,Please try again</p>');
+            setTimeout(()=>{
+                $('#vid-box').html('');
+                $('.icon-phone').css('display','block');
+            },3000);
+        });
 });

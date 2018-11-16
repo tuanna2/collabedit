@@ -52,15 +52,25 @@ io.on('connection',socket =>{
             io.to(key).emit('lang',lang);
         });
         //add :
-        socket.on('addCTV',admin=>{
-            io.to(key).emit('addCTV',admin);
-            let findID=active_users.filter(obj=>{
-                return obj.key == key && obj.UserName==admin; //return object info room
+        socket.on('addCTV',id=>{
+            let ctv=active_users.filter(obj=>{
+                return obj.id == id;
             });
-            socket.broadcast.to(findID[0].id).emit('CTV');
+            io.to(key).emit('addCTV',ctv[0].UserName);
+            socket.broadcast.to(id).emit('CTV');
         });
-        //run code
+        //build code: 
         socket.on('compiler',data=>io.to(key).emit('compiler',data));
+        //call video:
+        socket.on('user-calling',obj=>{
+            let user =active_users.filter(obj1=>{
+                return obj1.id == obj.to;
+            });
+            socket.broadcast.to(user[0].id).emit('user-calling',obj);
+        });
+        socket.on('decline',phone=>{
+            socket.broadcast.to(phone).emit('decline');
+        })
     });
         
 })

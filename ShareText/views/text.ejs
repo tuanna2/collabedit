@@ -45,6 +45,9 @@
         <!-- socket -->
     <script src="/socket.io/socket.io.js"></script>
      <script src="../socket-io.js"></script>
+     <!-- video call -->
+     <script src="../pubnub-3.7.14.min.js"></script>
+     <script src="../webrtc.js"></script>
     </head>
     <style>
     body{
@@ -135,6 +138,10 @@
                 <% if(-permission==0){ %>
                 <br><img style = "width: 20px; height: 20px" src="../admin.png"><span> : Add permission</span>
                 <%}%>
+                <br>
+                <div id="vid-box">
+                </div>
+                <button id ="end" style="display:none">Ending video chat</button>
             </div>
                 <div style="clear:both"></div>
             </div>
