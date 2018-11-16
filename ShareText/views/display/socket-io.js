@@ -65,10 +65,10 @@ $(document).ready(()=> {
 
         //listen event change code
         editor.on('keyup',()=>{
-            // setTimeout(()=>{
+            setTimeout(()=>{
                 $.post('',{TextArea:editor.getValue()});
                 socket.emit('realtime',editor.getValue());
-            // },3000);
+            },3000);
         }); 
         socket.on('realtime',value=>{
             let cursorPos= editor.getCursor();
