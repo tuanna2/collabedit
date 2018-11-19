@@ -78,6 +78,7 @@ $(document).ready(()=> {
 
         //change language
         $('#selectLang').change((data)=>{
+            let select = $(this);
             if(permission==0){
                 $.post('',{selectLang:$('#selectLang').val()},()=>{
                     socket.emit('langChange',{lang:$('#selectLang').val(),user:UserName});
@@ -93,7 +94,7 @@ $(document).ready(()=> {
             }
             else{
                 alert("You don't have permission");
-                $('#selectLang').val($(this).data('prev'))
+                $('#selectLang').val(select.data('prev'))
             }
         });
         socket.on('lang',obj=>{
