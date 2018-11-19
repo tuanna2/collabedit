@@ -5,7 +5,7 @@ const async = require("async");
 const routes = require('./routes');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-http.listen(3000);
+http.listen(process.env.PORT || 3000);
 
 app.use(session({
     secret: 'abcxuz',
