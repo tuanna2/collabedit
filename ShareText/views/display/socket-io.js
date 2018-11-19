@@ -76,22 +76,24 @@ $(document).ready(()=> {
             editor.setCursor(cursorPos);
         });
 
-        //select language
-        $('#selectLang').change(()=>{
-            if(permission==0)
+        //change language
+        $('#selectLang').change((data)=>{
+            if(permission==0){
                 $.post('',{selectLang:$('#selectLang').val()},()=>{
                     socket.emit('langChange',{lang:$('#selectLang').val(),user:UserName});
                 });
+                if($('#selectLang').val()=='text'){
+                    $('#compiler').css('display','none');
+                    $('#console').css('display','none');
+                }
+                else{
+                    $('#compiler').css('display','block');
+                    $('#console').css('display','block');
+                }
+            }
             else{
                 alert("You don't have permission");
-            }
-            if($('#selectLang').val()=='text'){
-                $('#compiler').css('display','none');
-                $('#console').css('display','none');
-            }
-            else{
-                $('#compiler').css('display','block');
-                $('#console').css('display','block');
+                $('#selectLang').val($(this).data('prev'))
             }
         });
         socket.on('lang',obj=>{

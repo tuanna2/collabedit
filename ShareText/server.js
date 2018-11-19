@@ -5,7 +5,7 @@ const async = require("async");
 const routes = require('./routes');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-http.listen(process.env.PORT || 3000);
+http.listen(3000);
 
 app.use(session({
     secret: 'abcxuz',
@@ -46,7 +46,6 @@ io.on('connection',socket =>{
         //shareText:
         socket.on('realtime',value =>{
             socket.broadcast.to(key).emit('realtime',value);
-
         });
         //change language:
         socket.on('langChange',lang=>{
@@ -73,6 +72,5 @@ io.on('connection',socket =>{
             socket.broadcast.to(phone).emit('decline');
         })
     });
-        
 })
 
