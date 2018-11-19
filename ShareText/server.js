@@ -45,7 +45,8 @@ io.on('connection',socket =>{
           });
         //shareText:
         socket.on('realtime',value =>{
-            io.to(key).emit('realtime',value);
+            socket.broadcast.to(key).emit('realtime',value);
+
         });
         //change language:
         socket.on('langChange',lang=>{
