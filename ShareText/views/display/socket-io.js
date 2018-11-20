@@ -75,9 +75,13 @@ $(document).ready(()=> {
                 editor.setValue(value);
             editor.setCursor(cursorPos);
         });
-
+        
         //change language
+<<<<<<< HEAD
         $('#selectLang').change(()=>{
+=======
+        $('#selectLang').change((data)=>{
+>>>>>>> 8ecc4674cfd56012a8eeb8529e91b7ce722df5fd
             if(permission==0){
                 $.post('',{selectLang:$('#selectLang').val()},()=>{
                     socket.emit('langChange',{lang:$('#selectLang').val(),user:UserName});
