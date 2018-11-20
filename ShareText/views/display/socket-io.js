@@ -49,7 +49,7 @@ $(document).ready(()=> {
         });
         socket.on('server-send-data', data =>{
             $('#messages').append($('<li>').text(data));
-            $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 500);
+            $('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 5);
         });
 
         //setup code editor
