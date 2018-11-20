@@ -11,7 +11,7 @@ app.use(session({
     secret: 'abcxuz',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge:1000*60*60 }
+    cookie: { maxAge:1000*60*60*24*7 }
   })) ; 
 app.use(express.static("views/display"));
 app.set("view engine","ejs"); 
@@ -52,7 +52,8 @@ io.on('connection',socket =>{
             io.to(key).emit('lang',lang);
         });
         //add :
-        socket.on('addCTV',id=>{
+        socket.on('addCTV',img=>{
+            let id = img.slice(3);
             let ctv=active_users.filter(obj=>{
                 return obj.id == id;
             });

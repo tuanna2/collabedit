@@ -27,8 +27,7 @@ $(document).ready(()=> {
             let array = [];
             obj.online.forEach(name=>{
                 array.push(name.UserName);
-                $('#person').append('<li class="tuan">'+name.UserName+'<div class="icon-user"><img id='+ name.id +' class ="icon-phone" style="width:20px;height:20px;'+(name.id==socket.id?'display:none':'')+'" src="../phone.png"><img  id='+ name.id +' class="icon-ctv" '+(permission==1?'style="display:none"':(name.UserName==admin?'style="display:none"':''))+' style = "width: 20px; height: 20px" src="../admin.png"></div></li>');
-            });
+                $('#person').append('<li class="tuan">'+name.UserName+'<div class="icon-user"><img id='+ name.id +' class ="icon-phone" style="width:20px;height:20px;'+(name.id==socket.id?'display:none':'')+'" src="../phone.png"><img  id='+ "img"+ name.id +' class="icon-ctv" '+(permission==1?'style="display:none"':(name.UserName==admin?'style="display:none"':''))+' style = "width: 20px; height: 20px" src="../admin.png"></div></li>');            });
             $('#ol').html(array.length);
         });
         //disconect
@@ -38,8 +37,7 @@ $(document).ready(()=> {
             let array = [];
             obj.online.forEach(name=>{
                 array.push(name.UserName);
-                $('#person').append('<li class="tuan">'+name.UserName+'<div class="icon-user"><img id='+ name.id +' class ="icon-phone" style="width:20px;height:20px;'+(name.id==socket.id?'display:none':'')+'" src="../phone.png"><img  id='+ name.id +' class="icon-ctv" '+(permission==1?'style="display:none"':(name.UserName==admin?'style="display:none"':''))+' style = "width: 20px; height: 20px" src="../admin.png"></div></li>');
-            });
+                $('#person').append('<li class="tuan">'+name.UserName+'<div class="icon-user"><img id='+ name.id +' class ="icon-phone" style="width:20px;height:20px;'+(name.id==socket.id?'display:none':'')+'" src="../phone.png"><img  id='+ "img"+ name.id +' class="icon-ctv" '+(permission==1?'style="display:none"':(name.UserName==admin?'style="display:none"':''))+' style = "width: 20px; height: 20px" src="../admin.png"></div></li>');            });
             $('#ol').html(array.length);
         })
 
@@ -99,6 +97,15 @@ $(document).ready(()=> {
             editor.setOption('mode',obj.lang);
             $('#selectLang').val(obj.lang);
             $('#messages').append($('<li>').text(obj.user +" changed language to "+$('#selectLang option:selected').text()));
+            if($('#selectLang').val()=='text'){
+                $('#compiler').css('display','none');
+                $('#ioput').css('display','none');
+            }
+            else{
+                $('#ioput').css('display','block');
+                if(permission==0)
+                    $('#compiler').css('display','block');
+            }
         });
 
         //add ctv
@@ -110,7 +117,7 @@ $(document).ready(()=> {
         });
         socket.on('addCTV',ctv=>{
             $('#messages').append($('<li>').text(ctv+' was appointed as a collaborators'));
-        })
+        });
         socket.on('CTV',()=>{
             permission=0;
             editor.setOption('readOnly',0);
