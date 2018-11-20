@@ -13,7 +13,7 @@ $(document).ready(()=> {
     }
     if($('#getSelect').val()=='text'){
         $('#compiler').css('display','none');
-        $('#console').css('display','none');
+        $('#ioput').css('display','none');
     }
     $('#yourName').html("<br/><span>Your name: " + UserName +" </span>");
     var key=$('#getKey').val();
@@ -77,24 +77,22 @@ $(document).ready(()=> {
         });
 
         //change language
-        $('#selectLang').change((data)=>{
-            let select = $(this);
+        $('#selectLang').change(()=>{
             if(permission==0){
                 $.post('',{selectLang:$('#selectLang').val()},()=>{
                     socket.emit('langChange',{lang:$('#selectLang').val(),user:UserName});
                 });
                 if($('#selectLang').val()=='text'){
                     $('#compiler').css('display','none');
-                    $('#console').css('display','none');
+                    $('#ioput').css('display','none');
                 }
                 else{
                     $('#compiler').css('display','block');
-                    $('#console').css('display','block');
+                    $('#ioput').css('display','block');
                 }
             }
             else{
                 alert("You don't have permission");
-                $('#selectLang').val(select.data('prev'))
             }
         });
         socket.on('lang',obj=>{

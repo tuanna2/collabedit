@@ -3,8 +3,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+        <link rel="shortcut icon" href="../troc.jpeg" />
         <link rel="stylesheet" href="../../combined_doc.css" />
-        <title><%-key%> - collabedit</title>
+        <title><%-key%> - codecungtroc</title>
         <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
         <script src="../bootstrap/jquery.min.js"></script>
         <script src="../bootstrap/bootstrap.min.js"></script>
@@ -59,7 +60,7 @@
     <body>
         <div id="header">
             <div id="logos">
-                <a id="logotext" href="/">collabedit</a>
+                <a id="logotext" href="/">Codecungtroc</a>
                 <br>
                 <a id="subtitle" href="/">simple collaborative text</a>
             </div>
@@ -98,7 +99,7 @@
                     <div style="float:left;width:80%">    
                         <textarea  name="TextArea" id="code"><%-value%></textarea>
                         <button  id="compiler" <%=permission==1?'style=display:none':'' %>>Run</button>
-                        <div>
+                        <div id ="ioput">
                             <div class="divleft" style="width: 50%;float: left;margin-top:20px">
                                 <p>Input</p>
                                 <textarea <%=permission==1?'disabled':'' %> style="background-color:rgb(37, 39, 51);color:#f1fa8c;white-space:pre-wrap" id= "input" rows = 5 cols =60 ></textarea>
@@ -118,7 +119,7 @@
                     <div id="sidebar_div">
                     <div style="margin-bottom: 10px">
                         <p class="chat_label">Programming Language</p>
-                        <select id='selectLang' name="selectLang" style="width:240px">
+                        <select id='selectLang' name="selectLang" style="width:240px" <%-permission==1?'disabled':''%></select> >
                             <option value="clike" <%-select=='clike'?'selected':'' %>>C++</option>
                             <option value="python" <%-select=='python'?'selected':'' %>>Python</option>
                             <option value="javascript" <%-select=='javascript'?'selected':'' %>>Javascript</option>
@@ -150,17 +151,17 @@
         </div>
         <div id="footer" style="text-align: center;margin-top:50px">
 &copy; 2016 
-            <a href="/">collabedit.com</a>
+            <a href="/">codecungtroc.ml</a>
 |
-            <a href="/about">about</a>
+            <a href="/">about</a>
 |
-            <a href="/faq">faq</a>
+            <a href="/">faq</a>
 |
-            <a href="/help">help</a>
+            <a href="/">help</a>
 |
-            <a href="/updates">updates</a>
+            <a href="/">updates</a>
 |
-            <a href="/legal">legal</a>
+            <a href="/">legal</a>
         </div>
     </body>
     
