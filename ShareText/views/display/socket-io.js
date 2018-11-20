@@ -175,7 +175,7 @@ $(document).ready(()=> {
                 session.connected(function(session) { $('#vid-box').html(session.video);$('#end').css('display','block');
             });
                 session.ended(function(session) { $('#vid-box').html('');$('#end').css('display','none');
-                $('.icon-phone').css('display','block');
+                $('.icon-phone').css('display','inline-block');
             });
             });
             socket.emit('user-calling',{from:UserName,phone:socket.id,to:$(id.currentTarget).attr('id')});
@@ -198,7 +198,7 @@ $(document).ready(()=> {
                 });
                     session.ended(function(session) { $('#vid-box').html(''); 
                     $('#end').css('display','none');
-                    $('.icon-phone').css('display','block');
+                    $('.icon-phone').css('display','inline-block');
                     });
                 });
                 setTimeout(()=>{
@@ -215,14 +215,14 @@ $(document).ready(()=> {
         $('#end').click(()=>{
             phone.hangup();
             $('#end').css('display','none');
-            $('.icon-phone').css('display','block');
+            $('.icon-phone').css('display','inline-block');
             return false;
         });
         socket.on('decline',()=>{
             $('#vid-box').html('<p>Cannot call,Please try again</p>');
             setTimeout(()=>{
                 $('#vid-box').html('');
-                $('.icon-phone').css('display','block');
+                $('.icon-phone').css('display','inline-block');
             },3000);
         });
     function get_xirsys_servers() {
