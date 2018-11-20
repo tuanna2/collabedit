@@ -234,7 +234,7 @@ $(document).ready(()=> {
             data: {
                 room: 'default',
                 application: 'default',
-                domain: 'tuanna2.herokuapp.com',
+                domain: 'codecungtroc.ml',
                 ident: 'tuanna2',
                 secret: '77d9f18c-e7f9-11e8-bda6-0242ac110003',
             },
