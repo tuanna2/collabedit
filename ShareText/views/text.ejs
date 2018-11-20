@@ -119,7 +119,7 @@
                     <div id="sidebar_div">
                     <div style="margin-bottom: 10px">
                         <p class="chat_label">Programming Language</p>
-                        <select id='selectLang' name="selectLang" style="width:240px" <%-permission==1?'disabled':''%></select> >
+                        <select id='selectLang' name="selectLang" style="width:240px" <%=permission==1?'disabled':''%>>
                             <option value="clike" <%-select=='clike'?'selected':'' %>>C++</option>
                             <option value="python" <%-select=='python'?'selected':'' %>>Python</option>
                             <option value="javascript" <%-select=='javascript'?'selected':'' %>>Javascript</option>
