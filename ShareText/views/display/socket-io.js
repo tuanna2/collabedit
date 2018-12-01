@@ -1,6 +1,5 @@
 const socket = io();
 
-
 $(document).ready(()=> {
     var UserName=$('#getUsername').val();
     var admin=$('#getAdmin').val();

@@ -6,12 +6,39 @@
         <link rel="stylesheet" href="./reset.css" />
         <link rel="stylesheet" href="./backend.css" />
         <script src="./jquery-1.6.2.min.js"></script>
+        <script>
+            $(document).ready(()=>{
+                $('#getKey').click(()=>{
+                    console.log($('#key').val().length)
+                    if($('#key').val().length!=5){
+                        alert("Key must be 5 characters long");
+                        return false;
+                    }
+                    else{
+                        window.open('https://codecungtroc.ml/key/'+$('#key').val(), '_blank');
+                    }
+                });
+            });
+        </script>
         <title>Welcome to Codecungtroc.ml</title>
         <meta name="description" content="Codecungtroc is an online text editor that allows real-time collaboration.">
         <style>
 body{
     background-color: #E3E3E3!important;
     font-family: georgia,verdana,arial!important;
+}
+#getKey{
+    border: 0;
+    color: white;
+    background: #d78837;
+    font-size: 17px;
+    border-radius: 2px;
+}
+#getKey:hover{
+    font-family: 'Courier New', Courier, monospace;
+}
+#key{
+    padding-left: 3px;
 }
 #wrap {
 margin: 0px auto;
@@ -154,8 +181,12 @@ Try it now, just login and click
                             <img src="./create_new_button.png" style="border: none" alt="create a new collaborative document">
                         </a>
                     </div>
-
+                    <br><br>
+                    <span>or join key:</span>
+                    <input maxlength=5 id="key" type = "text" placeholder ="Example: 368gt">
+                    <button id="getKey">JOIN</button>
                 </div>
+                
                 <div style="clear:both"></div>
                 <div id="usagesdiv">
                     <div class="label1">
