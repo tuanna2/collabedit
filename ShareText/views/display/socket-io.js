@@ -17,7 +17,6 @@ $(document).ready(()=> {
     $('#yourName').html("<br/><span>Your name: " + UserName +" </span>");
     var key=$('#getKey').val();
     socket.emit('room',key);
-    $("chuong").trigger('load');
     var permission = parseInt($('#permission').val());
         //connect
         socket.emit('user-connect',UserName);
@@ -183,6 +182,7 @@ $(document).ready(()=> {
         });
 
         socket.on('user-calling',user=>{
+            $("chuong").trigger('load');
             $("#chuong").trigger('play');
             $('#vid-box').html('<div id="calling-box"><p>'+user.from+' calling you</p><button id="accept">ACCEPT</button><button id="decline">DECLINE</button></div>');
             $('#accept').click(()=>{
