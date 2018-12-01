@@ -182,8 +182,12 @@ $(document).ready(()=> {
         });
 
         socket.on('user-calling',user=>{
+            $("chuong").trigger('load');
+            $("#chuong").trigger('play');
             $('#vid-box').html('<div id="calling-box"><p>'+user.from+' calling you</p><button id="accept">ACCEPT</button><button id="decline">DECLINE</button></div>');
             $('#accept').click(()=>{
+                $("#chuong").trigger('pause');
+                $("#chuong").prop("currentTime",0);
                 $('.icon-phone').css('display','none');
                 $('#vid-box').html('Waiting');
                 let phone = window.phone = PHONE({
@@ -207,6 +211,8 @@ $(document).ready(()=> {
                 return false;
             });
             $('#decline').click(()=>{
+                $("#chuong").trigger('pause');
+                $("#chuong").prop("currentTime",0);
                 socket.emit('decline',user.phone);
                 $('#vid-box').html('');
                 return false;

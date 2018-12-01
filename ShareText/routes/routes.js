@@ -1,6 +1,6 @@
-const controllerHome = require('./controllers/home');
-const controllerUser = require("./controllers/users");
-const controllerData = require('./controllers/text');
+const controllerHome = require('../controllers/home');
+const controllerUser = require("../controllers/users");
+const controllerData = require('../controllers/text');
 const express = require('express');
 const bodyParser =require('body-parser');
 const routes = express();
