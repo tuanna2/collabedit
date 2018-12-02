@@ -22,7 +22,7 @@ $(document).ready(()=> {
         socket.emit('user-connect',UserName);
         socket.on('user-connect',obj =>{
             $('.tuan').remove();
-            $('#messages').append($('<li>').text(obj.UserName +" joined"));
+            $('#messages').append($('<li class="joinleft">').text(obj.UserName +" joined"));
             let array = [];
             obj.online.forEach(name=>{
                 array.push(name.UserName);
@@ -31,7 +31,7 @@ $(document).ready(()=> {
         });
         //disconect
         socket.on('user-disconnect',obj =>{
-            $('#messages').append($('<li>').text(obj.UserName +" left"));
+            $('#messages').append($('<li class="joinleft">').text(obj.UserName +" left"));
             $('.tuan').remove();
             let array = [];
             obj.online.forEach(name=>{
