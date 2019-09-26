@@ -7,6 +7,8 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 http.listen(3000);
 const socket = require('./routes/socket');
+const sslRedirect = require('heroku-ssl-redirect');
+app.use(sslRedirect());
 new socket(io);
 
 app.use(session({
